@@ -46,8 +46,8 @@ class Environment(UserDict.IterableUserDict):
 	def splitvals(self, val):
 		"""
 		Split the val into a list based on the os.pathsep
-        @param val The string or list value to split.        
-        @returns List of values
+		@param val The string or list value to split.        
+		@returns List of values
 		"""		
 		if isinstance(val, (list, tuple)):						
 			return list(itertools.chain.from_iterable([ self.splitvals(x) \
@@ -57,8 +57,8 @@ class Environment(UserDict.IterableUserDict):
 	def set(self, key, val):
 		"""
 		Set the value of key in the environment
-        @param key The environment key.        
-        @param val The environment value.
+		@param key The environment key.        
+		@param val The environment value.
 		"""		
 		if isinstance(val, append):
 			self.append(key, val.val)
@@ -73,9 +73,9 @@ class Environment(UserDict.IterableUserDict):
 	def get(self, key, default=None):
 		"""
 		Get the value of the specified environment key.
-        @param key The enviornment variable to return the value of.
-        @param default A default value to return if the key does not exist.        
-        @returns String value
+		@param key The enviornment variable to return the value of.
+		@param default A default value to return if the key does not exist.        
+		@returns String value
 		"""
 		val = self.data.get(key, default)
 		if val is None:
@@ -87,8 +87,8 @@ class Environment(UserDict.IterableUserDict):
 	def append(self, key, val):
 		"""
 		Append an existing environment variable with a value.
-        @param key The environment variable.        
-        @param val The value to append.       
+		@param key The environment variable.        
+		@param val The value to append.       
 		"""
 		if key in self.data:						
 			self.data[key].extend(self.splitvals(val))
@@ -98,8 +98,8 @@ class Environment(UserDict.IterableUserDict):
 	def prepend(self, key, val):
 		"""
 		Prepend an existing environment variable with a value.
-        @param key The environment variable.        
-        @param val The value to prepend.        
+		@param key The environment variable.        
+		@param val The value to prepend.        
 		"""
 		if key in self.data:						
 			self.data[key].insert(0, *self.splitvals(val))
