@@ -1,7 +1,4 @@
 
-
-
-
 class NodeLibrary(object):
     """
     """

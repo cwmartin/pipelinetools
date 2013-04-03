@@ -6,17 +6,16 @@ class Exporter(object):
     """    
     VERSION = None
 
-    def export(self, node, typename):
+    def export(self, *args, **kwargs):
         """
-        """        
-        header = {"version":self.VERSION}
-        export_data = self._export(node, typename)
-        return {"header":header, "nodetype":export_data}
+        """                
+        export_data = self._export(*args, **kwargs)
+        return export_data        
 
-    def _export(self, node, typename):
+    def _export(self, *args, **kwargs):
         """
         """
-        pass        
+        pass
 
 class NodeTypeExporter(Exporter):
     """
@@ -41,7 +40,7 @@ class NodeTypeExporter(Exporter):
     def _export(self, node, typename):
         """
         """
-        return self._export_node_type(node, typename)
+        return {"nodetype":self._export_node_type(node, typename)}
 
 class GraphExporter(Exporter):
     """
@@ -103,8 +102,7 @@ class GraphExporter(Exporter):
         nodes = []
         for node in graph.nodes:                    
             nodes.append(self._export_node(node))            
-        export = OrderedDict()        
-        export["version"] = self.VERSION
+        export = OrderedDict()                
         if graph.output_node is None:            
             export["output_node"] = None
         else:
@@ -112,41 +110,7 @@ class GraphExporter(Exporter):
         export["nodes"] = nodes
         return export
     
-    def export(self, graph):
+    def _export(self, graph):
         """    
         """
-        return self._export_graph(graph)
-    
-class JSONGraphExporter(object):
-    """                
-    """
-    
-    def export(self, graph, filename):
-        """
-        """
-        exp = GraphExporter()
-        graph_data = exp.export(graph)        
-        export_data = OrderedDict()        
-        export_data["nodegraph"] = graph_data        
-        fp = open(filename, "w")
-        json.dump(export_data, fp, indent=4)
-        fp.close()
-
-class JSONNodeTypeExporter(NodeTypeExporter):
-"""
-    """            
-    class JSONNodeTypeExporter(object):
-    """                
-    """
-        
-    def export(self, subgraph, typename, filename):
-        """
-        """
-        exp = NodeTypeExporter()
-        node_type_data = exp.export(subgraph, typename)
-        export_data = OrderedDict()
-        export_data["nodetype"] = node_type_data                 
-        fp = open(filename, "w")
-        json.dump(node_type_data, fp, indent=4)
-
-    
+        return {"graph":self._export_graph(graph)}

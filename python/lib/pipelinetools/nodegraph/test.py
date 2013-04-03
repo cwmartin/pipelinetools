@@ -25,11 +25,12 @@ op3.input_param("user_param1").value = op1.output_param("netout")
 
 code = """
 print "this is the Code node"
+a = 10 + 1
 print inputs["user_param1"].value
 
 out = inputs["user_param1"].value
 
-outputs["return"].value = out
+outputs["return"].value = a
 """
 op3.input_param("code").value = code
 
@@ -44,23 +45,25 @@ nge = NodeGraphExecutor()
 nge.execute(ng)
 
 subgraphnode = ng.collapse(nodes=[op2, op3])
-import exporter
 
-exp = exporter.JSONGraphExporter()
+import writer
+
+graph_writer = writer.GraphWriter()
+
 if platform.system() == "Linux":
     export_path = "/home/christopher/dev/scratch"
 else:
     export_path = "D:/dev/"
 
-exp.export(ng, os.path.join(export_path, "test.smg"))
+compress = False
+graph_writer.write(ng, os.path.join(export_path, "test.smg"), compress=compress)
+node_type_writer = writer.NodeTypeWriter()
+node_type_writer.write(subgraphnode, "MyNodeType2", os.path.join(export_path, 
+                    "test.nte"), compress=compress)
 
-nexp = exporter.JSONNodeTypeExporter()
+#import reader
 
-nexp.export(subgraphnode, "MyNodeType2",  os.path.join(export_path, "test.nte"))
+#r = reader.JSONNodeTypeReader()
 
-import reader
-
-r = reader.JSONNodeTypeReader()
-
-print r.read(os.path.join(export_path, "test.nte"))
+#print r.read(os.path.join(export_path, "test.nte"))
 

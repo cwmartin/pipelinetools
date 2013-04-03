@@ -1,6 +1,6 @@
 from pipelinetools.utils.ordereddict import OrderedDict
 
-class NodeTypeImportExport(object):
+class NodeTypeIO(object):
     """
     """
 
@@ -14,11 +14,7 @@ class NodeTypeImportExport(object):
         """
         pass
 
-
-
-
-
-class NodeGraphImportExport(object):
+class GraphIO(object):
     """
     """    
     def _import(self, graph_data):

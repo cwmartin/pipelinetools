@@ -10,7 +10,8 @@ class NodeTypeReader(object):
     """
     def _read_type(self, data):        
         typename = data["typename"]
-        subtype = data["subtype"]        
+        subtype = data["subtype"]
+        version = data["version"]
         subtype = nodelib.NodeLibrary.get_node_type(subtype)    
         new_class = type(str(typename), (subtype,), {})
         
