@@ -1,0 +1,67 @@
+{
+    "latest":"2013",
+    //Non version specific block
+    "environment":{
+        "common":{
+            "TOOLS":"",
+            "PATH":{"append":"${MAYADIR}/bin"},
+            "PYTHONPATH":{"prepend":"${TOOLS}/general/config/maya/default"},
+            "MAYA_PLUGIN_PATH":["${MAYADIR}/plug-ins"],
+            "MAYA_SCRIPT_PATH":["${MAYADIR}/scripts", "${MAYADIR}/scripts/AETemplates"]
+        }
+    },
+    //Versions
+    "versions":{
+        //2012
+        "2012":{
+            //Environment
+            "environment":{
+                "common": {
+                    "MAYAVER":"2012"
+                },
+                "windows": {
+                    "MAYADIR":"C:/Program Files/Autodesk/Maya2012"
+                },
+                "linux": {
+                    "MAYADIR":"/usr/autodesk/maya012-x64"
+                },
+                "os":{
+                }
+            }
+        },
+        //2013
+        "2013":{
+            //Prerequisites
+            "requires":{
+                "3delight":""
+            },
+            //Environment
+            "environment":{
+                "common": {
+                    "MAYAVER":"2013"
+                },
+                "windows": {
+                    "MAYADIR":"C:/Program Files/Autodesk/Maya2013"
+                },
+                "linux": {
+                    "MAYADIR":"/usr/autodesk/maya013-x64"
+                },
+                "os":{
+                }
+            }
+        }
+    },
+    //Aliases
+    "aliases":{
+        "common":{
+            "maya":"${MAYADIR}/bin/maya",
+            "mayapy":"${MAYADIR}/bin/mayapy"
+        },
+        "windows":{
+        },
+        "linux":{
+        },
+        "osx":{
+        }
+    }
+}

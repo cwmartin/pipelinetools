@@ -1,0 +1,41 @@
+###########################################
+#Maya Realm
+###########################################
+#component-parser: pipelinetools.realm.realmpaser.MayaRealmDefsParser
+#component-requires-engine: pipelinetools.realm.realmreqengine.DefaultRealmRquiresEngine
+
+
+windows:
+    MAYADIR: "C:/Program Files/Autodesk/Maya2012"
+
+linux:
+    MAYADIR: "/usr/autodesk/maya2012-x64"
+
+component-def
+  environment:
+    common:
+      MAYAVER: "2012"
+    windows:
+      MAYADIR: "C:/Program Files/Autodesk/Maya2012"
+    linux:
+      MAYADIR: "/usr/autodesk/maya2012-x64"
+    osx:
+      MAYADIR: ""
+  requires:
+    common:
+      votterotools: "1.0"
+  2013:
+      environment:
+        common:
+          MAYAVER: "2013"
+        windows:
+          MAYADIR: "C:/Program Files/Autodesk/Maya2013"
+        linux:
+          MAYADIR: "/usr/autodesk/maya2013-x64"
+        osx:
+          MAYADIR: ""
+      requires:
+        common:
+          votterotools: "1.5"
+
+

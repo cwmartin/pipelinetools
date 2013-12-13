@@ -1,0 +1,54 @@
+###########################################
+#Maya Realm
+###########################################
+#realm-defs-parser: pipelinetools.realm.realmpaser.MayaRealmDefsParser
+#realm-requires-engine: pipelinetools.realm.realmreqengine.DefaultRealmRquiresEngine
+
+default-def: 2012
+
+realm-defs:
+  root:
+    realm-def:
+      environment:
+        common:
+          TOOLS: "C:/dev"
+          PATH: "+${MAYADIR}/bin"
+          PYTHONPATH: "++${TOOLS}/general/config/maya/default"          
+          MAYADIR: "C:/dev"
+          MAYA_PLUGIN_PATH: "${MAYADIR}/plugins"
+          MAYA_SCRIPT_PATH: ["${MAYADIR}/scripts", "${MAYADIR}/scripts/AETemplates"]
+      requires:
+        3Delight: "any"
+        votterotools: "1.0"
+      aliases:
+        common:        
+          maya: "${MAYADIR}/bin/maya"
+          mayapy: "${MAYADIR}/bin/maypy"
+  2012:
+    realm-def:
+      environment:
+        common:
+          MAYAVER: "2012"
+        windows:
+          MAYADIR: "C:/Program Files/Autodesk/Maya2012"
+        linux:
+          MAYADIR: "/usr/autodesk/maya2012-x64"
+        osx:
+          MAYADIR: ""
+      requires:
+        common:
+          votterotools: "1.0"        
+  2013:
+    realm-def:
+      environment:
+        common:
+          MAYAVER: "2013"
+        windows:
+          MAYADIR: "C:/Program Files/Autodesk/Maya2013"
+        linux:
+          MAYADIR: "/usr/autodesk/maya2013-x64"
+        osx:
+          MAYADIR: ""
+      requires:
+        common:
+          votterotools: "1.5"

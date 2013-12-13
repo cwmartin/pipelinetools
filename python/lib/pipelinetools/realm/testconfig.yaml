@@ -1,0 +1,54 @@
+###########################################
+#Maya Realm
+###########################################
+
+#Common Maya Realm
+realm-def:
+  #Environment
+  environment:
+    common:
+      TOOLS: "C:/dev"
+      PATH: "+${MAYADIR}/bin"
+      PYTHONPATH: "++${TOOLS}/general/config/maya/default"
+      MAYA_PLUGIN_PATH: "${MAYADIR}/plugins"
+      MAYA_SCRIPT_PATH: ["${MAYADIR}/scripts", "${MAYADIR}/scripts/AETemplates"]
+  #Requirements
+  requires:
+    3Delight: ">=10.0.133"
+    tbxpython: ""
+  #Aliases
+  aliases:
+    common:
+      maya: "${MAYADIR}/bin/maya"
+      mayapy: "${MAYADIR}/bin/maypy"
+
+#Default Maya Version
+default: "2012"
+
+#Maya Versions
+variants:
+  #Maya2012
+  2012:
+    realm-def:
+      environment:
+        common:
+          MAYAVER: "2012"
+        windows:
+          MAYADIR: "C:/Program Files/Autodesk/Maya2012"
+        linux:
+          MAYADIR: "/usr/autodesk/maya2012-x64"
+        osx:
+          MAYADIR: ""
+  #Maya2013
+  2013:
+    realm-def:
+      environment:
+        common:
+          MAYAVER: "2013"
+        windows:
+          MAYADIR: "C:/Program Files/Autodesk/Maya2013"
+        linux:
+          MAYADIR: "/usr/autodesk/maya2013-x64"
+        osx:
+          MAYADIR: ""
+

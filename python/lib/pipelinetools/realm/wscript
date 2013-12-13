@@ -1,0 +1,20 @@
+"""
+""" 
+
+from pipelinetools.buildsys.wafpymodule import WafPythonModuleBuild
+
+MODULE_PATH = "tbx.realm"
+MODULE_VERSION = 101
+PYFILES = "*.py"
+EXCLUDE_FILES = ""
+
+top = WafPythonModuleBuild.top()
+out = WafPythonModuleBuild.out()
+
+options = WafPythonModuleBuild.options
+configure = WafPythonModuleBuild.configure
+
+            
+def build(bld):
+    WafPythonModuleBuild.build(bld, MODULE_PATH, MODULE_VERSION, pyfiles=PYFILES, 
+        exclude_files=EXCLUDE_FILES, recurse=True)

@@ -1,0 +1,35 @@
+###########################################
+#Python Realm
+###########################################
+#realm-defs-parser: pipelinetools.realm.realmpaser.MayaRealmDefsParser
+#realm-requires-engine: pipelinetools.realm.realmreqengine.DefaultRealmRquiresEngine
+
+default-def: 2.7
+
+realm-defs:
+  root:
+    realm-def:      
+      environment:
+          common:
+            PATH: "++${PYTHONDIR}"
+          windows:
+            PYTHONBIN: "python.exe"
+          linux:
+            PYTHONDIR: "/usr/bin"
+      aliases:
+        common:
+          python: "${PYTHONBIN}"
+  2.6:
+    realm-def:
+      environment:                
+        windows:
+          PYTHONDIR: "C:/Python2.6"
+        linux:
+          PYTHONBIN: "python2.6"      
+  2.7:
+    realm-def:
+      environment:                
+        windows:
+          PYTHONDIR: "C:/Python2.7"
+        linux:
+          PYTHONBIN: "python2.7"      

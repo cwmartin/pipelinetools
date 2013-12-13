@@ -1,0 +1,12 @@
+dirmaps:
+  - linux: "/mnt/studio"
+    windows: "O:/studio"
+
+  - linux: "/mnt/T"
+    windows: "T:"
+
+  - linux: "/mnt/Y"
+    windows: "Y:"
+
+  - linux: "/mnt/Q"
+    windows: "Q:"

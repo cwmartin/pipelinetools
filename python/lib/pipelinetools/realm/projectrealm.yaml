@@ -1,0 +1,5 @@
+realm:
+    components:
+        maya: "default"
+        prman: "default"
+        katana: "default"

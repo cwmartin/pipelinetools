@@ -1,0 +1,41 @@
+###########################################
+#PRMan Realm
+###########################################
+realm-component-parser: ""
+#realm-defs-parser: pipelinetools.realm.realmpaser.MayaRealmDefsParser
+#realm-requires-engine: pipelinetools.realm.realmreqengine.DefaultRealmRquiresEngine
+
+default-def: 17.0
+
+realm-defs:
+  root:
+    realm-def:
+      environment:
+        common:
+          PATH: "+${RMANTREE}/bin"
+  16.4:
+    realm-def:
+      environment:
+        common:
+          PRMANVER: "16.4"
+          PRMANMAJORVER:"16"
+          PRMANMINORVER:"4"
+        windows:
+          RMANTREE: "/opt/pixar/RenderManProServer-16.4"
+        linux:
+          RMANTREE: "/opt/pixar/RenderManProServer-16.4"
+        osx:
+          RMANTREE: ""
+  17.0:
+    realm-def:
+      environment:
+        common:
+          PRMANVER: "17.0"
+          PRMANMAJORVER:"17"
+          PRMANMINORVER:"0"
+        windows:
+          RMANTREE: "/opt/pixar/RenderManProServer-17.0"
+        linux:
+          RMANTREE: "/opt/pixar/RenderManProServer-17.0"
+        osx:
+          RMANTREE: ""

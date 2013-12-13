@@ -1,0 +1,48 @@
+###########################################
+#Maya Realm
+###########################################
+#component-parser: pipelinetools.realm.realmpaser.MayaRealmDefsParser
+#component-requires-engine: pipelinetools.realm.realmreqengine.DefaultRealmRquiresEngine
+
+default: 2013
+
+component-def:
+  root:
+      environment:
+        common:
+          TOOLS: "C:/dev"
+          PATH: "+${MAYADIR}/bin"
+          PYTHONPATH: "++${TOOLS}/general/config/maya/default"
+          MAYADIR: "C:/dev"
+          MAYA_PLUGIN_PATH: "${MAYADIR}/plugins"
+          MAYA_SCRIPT_PATH: ["${MAYADIR}/scripts", "${MAYADIR}/scripts/AETemplates"]
+      requires:
+        common:
+          prman: 16.4
+      aliases:
+        common:
+          maya: "${MAYADIR}/bin/maya"
+          mayapy: "${MAYADIR}/bin/maypy"
+  2012:
+      environment:
+        common:
+          MAYAVER: "2012"
+        windows:
+          MAYADIR: "C:/Program Files/Autodesk/Maya2012"
+        linux:
+          MAYADIR: "/usr/autodesk/maya2012-x64"
+        osx:
+          MAYADIR: ""
+  2013:
+      environment:
+        common:
+          MAYAVER: "2013"
+        windows:
+          MAYADIR: "C:/Program Files/Autodesk/Maya2013"
+        linux:
+          MAYADIR: "/usr/autodesk/maya2013-x64"
+        osx:
+          MAYADIR: ""
+      requires:
+        common:
+          prman: 17.0

@@ -1,0 +1,45 @@
+import os
+import platform
+from waflib import Context
+
+MODULE_PATH = "pipelinetools.buildsys"
+MODULE_VERSION = 100
+PYFILES = "*.py"
+SUBDIRS = None
+
+top = os.path.expandvars("TBX_SRC_PATH")
+out = os.path.expandvars("TBX_BUILD_PATH")
+
+def options(opt):
+    opt_group = opt.add_option_group("ToonBox Options")
+    opt_group.add_option('--publish', dest='publish', default=False, action='store_true', help='Publish to production.')
+
+def configure(cfg):
+    Context.run_dir = cfg.path.abspath()
+    if platform.system() == "Winwdows":
+        cfg.env.COPY = "copy"
+    else:
+        cfg.env.COPY = "cp"
+        
+def build(bld):    
+            
+    pyfiles = bld.path.ant_glob(PYFILES)
+    
+    for pyfile in pyfiles:
+        pyfile_str = str(pyfile)        
+        build_target = "%s.out" % pyfile_str
+        
+        module_path = MODULE_PATH.replace(".", os.path.sep)
+        
+        bld(source=pyfile_str, target=build_target, rule="${COPY} ${SRC} ${TGT}")
+        build_output = os.path.join(os.path.expandvars("%MARCH_DEV_PYTHON_LIB_PATH%"), 
+                                        module_path, pyfile_str)
+        bld.install_as(build_output, build_target)
+        
+        if bld.options.publish:
+            build_output = os.path.join(os.path.expandvars("%MARCH_PYTHON_LIB_PATH%"), 
+                                        module_path, pyfile_str)
+            bld.install_as(build_output, build_target, chmod=505)            
+           
+    subdirs = SUBDIRS or [ n.path_from(n.parent) for n in bld.path.ant_glob("*", dir=True, src=False) ]         
+    bld.recurse(subdirs, "build", mandatory=True)

@@ -1,0 +1,33 @@
+###########################################
+#Katana Realm
+###########################################
+#realm-defs-parser: pipelinetools.realm.realmpaser.MayaRealmDefsParser
+#realm-requires-engine: pipelinetools.realm.realmreqengine.DefaultRealmRquiresEngine
+
+default-def: 1.4v1
+
+realm-defs:
+  root:
+    realm-def:
+      environment:
+        common:
+          PATH: "+${KATANA_HOME}"
+          KATANA_RESOURCES: "${KATANA_HOME}/plugins/Resources/PRMan${PRMANMAJORVER}"
+          RMAN_SHADERPATH: "+${KATANA_HOME}/plugins/Resources/PRMan${PRMANMAJORVER}/Shaders"
+      requires:
+        common:
+          prman: ">=16.4"
+  1.2v2:
+    realm-def:
+      environment:
+        common:
+          KATANAVER: "1.2v2"
+        linux:
+          KATANA_HOME: "/opt/foundry/katana1.2v2"
+  1.4v1:
+    realm-def:
+      environment:
+        common:
+          KATANAVER: "1.4v1"
+        linux:
+          KATANA_HOME: "/opt/foundry/katana1.4v1"
