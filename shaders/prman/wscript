@@ -1,0 +1,10 @@
+from pipelinetools.build_sys.waf.wafrendermansl import WafRendermanSLBuild
+
+top = WafRendermanSLBuild.top()
+out = WafRendermanSLBuild.out()
+
+configure = WafRendermanSLBuild.configure
+options = WafRendermanSLBuild.options
+
+def build(bld):
+    WafRendermanSLBuild.build(bld)

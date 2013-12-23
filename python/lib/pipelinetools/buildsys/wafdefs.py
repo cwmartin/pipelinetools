@@ -12,13 +12,13 @@ class WafBuild(object):
     def top(cls):
         """
         """
-        return os.path.expandvars("$TBX_SRC_DIR")
+        return os.path.expandvars("$TBE_SRC_DIR")
 
     @classmethod
     def out(cls):
         """
         """
-        return os.path.expandvars("$TBX_BUILD_DIR")
+        return os.path.expandvars("$TBE_BUILD_DIR")
 
     @classmethod
     def recurse(cls, ctx, func_name, subdirs=None):
@@ -33,13 +33,13 @@ class WafBuild(object):
     def configure(cls, cfg):
         """
         """
-        cfg.env.TBX_ROOT_PATH = os.path.expandvars("$TBX_ROOT_PATH")
-        cfg.env.TBX_LIB_PATH = os.path.expandvars("$TBX_LIB_PATH")
-        cfg.env.TBX_PYTHON_PATH = os.path.expandvars("$TBX_PYTHON_PATH")
-        cfg.env.TBX_DOC_PATH = os.path.expandvars("$TBX_DOC_PATH")
-        cfg.env.TBX_DEV_PYTHON_PATH = os.path.expandvars("$TBX_DEV_PYTHON_PATH")
+        cfg.env.TBE_ROOT_PATH = os.path.expandvars("$TBE_ROOT_PATH")
+        cfg.env.TBE_LIB_PATH = os.path.expandvars("$TBE_LIB_PATH")
+        cfg.env.TBE_PYTHON_PATH = os.path.expandvars("$TBE_PYTHON_PATH")
+        cfg.env.TBE_DOC_PATH = os.path.expandvars("$TBE_DOC_PATH")
+        cfg.env.TBE_DEV_PYTHON_PATH = os.path.expandvars("$TBE_DEV_PYTHON_PATH")
 
-        cfg.env.TBX_OPTION_GROUP = "ToonBox Options"
+        cfg.env.TBE_OPTION_GROUP = "ToonBox Options"
         cfg.env.PLATFORM = platform.system().lower()
 
         if cfg.env.PLATFORM == "windows":
@@ -86,8 +86,6 @@ class WafBuild(object):
     def build(cls, bld, *args, **kwargs):
         """
         """
-        
-
         recurse = kwargs.pop("recurse", False)
         subdirs = kwargs.pop("subdirs", None)
 
