@@ -6,9 +6,6 @@ import os
 import platform
 from waflib import Context
 
-"""
-WAF
-"""
 
 class WafBuild(object):
 
@@ -16,13 +13,13 @@ class WafBuild(object):
     def top(cls):
         """
         """
-        return os.path.join(os.environ.get("TBE_SRC_ROOT"))
+        return os.environ.get("TBE_SRC_ROOT")
 
     @classmethod
     def out(cls):
         """
         """
-        return os.path.join(os.environ.get("TBE_SRC_ROOT"), "build")
+        return os.environ.get("TBE_BUILD_ROOT")
 
     @classmethod
     def recurse(cls, ctx, func_name, subdirs=None):
@@ -46,15 +43,14 @@ class WafBuild(object):
         """
 
         cfg.env.OPTION_GROUP = "ToonBox Options"
-        cfg.env.PLATFORM = platform.system()
+        cfg.env.PLATFORM = platform.system().lower()
+        cfg.env.PLATFORM_NAME = cfg.env.PLATFORM
 
-        if cfg.env.PLATFORM == "Windows":
-            cfg.env.PLATFORM_NAME = "windows"
+        if cfg.env.PLATFORM == "windows":
             cfg.env.COPY = "copy"
-        elif cfg.env.PLATFORM == "Linux":
-            cfg.env.PLATFORM_NAME = "linux"
+        elif cfg.env.PLATFORM == "dinux":
             cfg.env.COPYC = "cp"
-        elif cfg.env.PLATFORM == "Darwin":
+        elif cfg.env.PLATFORM == "darwin":
             cfg.env.PLATFORM_NAME = "osx"
             cfg.env.COPY = "cp"
 
@@ -64,7 +60,6 @@ class WafBuild(object):
             cfg.env.INSTALL_CHMOD = 777
 
         Context.run_dir = cfg.path.abspath()
-
 
         if cfg.options.tools_root is None:
             cfg.env.PREFIX = os.environ.get("TBE_TOOLS_ROOT")
