@@ -1,4 +1,4 @@
 pipelinetools
 =============
 
-Animation/VFX Pipeline Tools
+Film and Animation Pipeline Tools
