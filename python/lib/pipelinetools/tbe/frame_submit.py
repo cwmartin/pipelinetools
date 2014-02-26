@@ -1,11 +1,83 @@
-import shotgun
+#import shotgun
 import getpass
 import subprocess
+import json
 import re
 import os
 import logging
 
 log = logging.getLogger(__name__)
+
+def get_media_info_ffprobe(path):
+    """
+    """
+    cmd = ["ffprobe", "-show_streams", "-print_format", "json", path]
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = p.communicate()
+
+    if not p.returncode is 0:
+        raise Exception("Unable to get media info from '%s':\n\t%s" % (path, output[1]))
+
+    json_info = json.loads(output[0])
+    if not json_info:
+        raise Exception("Unable to get media info from '%s'. No data returned." % path)
+
+    streams = json_info["streams"]
+
+    media_infos = []
+
+    for stream in streams:        
+        media_info = {}
+        media_info["resolution"] = (int(stream["width"]), int(stream["height"]))
+        media_info["fps"] = int(stream["r_frame_rate"].split("/")[0])
+        media_info["frames"] = int(stream["nb_frames"])        
+        media_infos.append(media_info)
+
+    return media_infos
+
+
+def extract_image_from_movie(movie_filepath, frame, output_filepath, resolution=None, force=True):
+    """
+    """
+    media_infos = get_media_info_ffprobe(movie_filepath)
+    num_frames = media_infos[0]["frames"]
+    fps = media_infos[0]["fps"]
+    
+    if isinstance(frame, basestring):
+        frame_lower = frame.lower()
+        if frame_lower == "first":
+            frame = 1
+        elif frame_lower == "middle":
+            frame = num_frames / 2
+        elif frame_lower == "last":
+            frame = num_frames
+        else:
+            try:
+                frame = int(frame)
+            except:
+                raise Exception("Invalid frame value '%s'." % frame)
+
+
+    set_point = frame / float(num_frames)
+
+    cmd = ["ffmpeg", "-ss", str(set_point), "-i", movie_filepath, "-vframes", str(1)]
+
+    if resolution:
+        cmd.append("-s")
+        cmd.append(resolution)
+
+    if force:
+        cmd.append("-y")  
+
+    cmd.append(output_filepath)
+
+    print " ".join(cmd)
+    
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = p.communicate()
+
+    if not p.returncode == 0:
+        raise Exception(output[1])
 
 def get_media_info(path):
     """
@@ -26,10 +98,11 @@ def get_media_info(path):
 
     for entry in result.strip().split("\n")[1:]:
         entry = entry.strip()        
-        media_info = pattern.match(entry).groupdict()
-        media_info["resolution"] = [ int(x) for x in media_info["resolution"].split(" x ") ]
-        media_info["fps"] = int(media_info["fps"])   
-        media_info["frames"] = int(media_info["frames"])     
+        pattern_match = pattern.match(entry).groupdict()        
+        media_info = {}
+        media_info["resolution"] =  tuple([ int(x) for x in pattern_match["resolution"].split(" x ") ])
+        media_info["fps"] = int(pattern_match["fps"])   
+        media_info["frames"] = int(pattern_match["frames"])     
         media_infos.append(media_info)
 
     return media_infos
@@ -37,7 +110,7 @@ def get_media_info(path):
 def generate_movie_thumbnail(movie_filepath, output_path=None, frame=None):
     """
     """
-    media_info = get_media_info(movie_filepath)[0]
+    media_info = get_media_info_ffprobe(movie_filepath)[0]
     if frame is None:
         frame = media_info["frames"] / 2
     file_name, ext = os.path.splitext(os.path.basename(movie_filepath))
@@ -71,12 +144,12 @@ def frame_submit(entity, name, start_frame, end_frame, frames_path=None, movie_p
     version = shotgun.create_version(entity, name, user, frames_path, movie_path, start_frame,
         end_frame, description=comment)
 
-    print "Created Version", version
+    log.info("Created Version: %s" % version)
 
     if upload:
-        print "Uploading Movie..."
+        log.info("Uploading Movie...")
         shotgun.upload_quicktime(version["id"], upload)
-        print "Uploading Complete."
+        log.info("Uploading Complete.")
     
 def test_submit():
     frames = "/mnt/publish/shots/010/0020/lgt/render/images/snt_010_0020_lgt_v001.%V.1-24#.exr"
@@ -89,4 +162,11 @@ def test_submit():
         comment="quick test", upload=upload)
 
 #print get_media_info("/mnt/publish/shots/010/0020/lgt/movies/snt_010_0020_lgt_v001.left.mov")
-print generate_movie_thumbnail("/mnt/publish/shots/010/0020/lgt/movies/snt_010_0020_lgt_v001.left.mov")
+#print generate_movie_thumbnail("/mnt/publish/shots/010/0020/lgt/movies/snt_010_0020_lgt_v001.left.mov")
+#print get_media_info_ffprobe("/mnt/publish/shots/010/0020/lgt/movies/snt_010_0020_lgt_v001.left.mov")
+
+print extract_image_from_movie("/mnt/publish/shots/010/0020/lgt/movies/snt_010_0020_lgt_v001.left.mov", "middle", "/mnt/publish/shots/010/0020/lgt/movies/test.jpg")
+
+
+#log.addHandle(logging.StreamHandler())
+#log.setLevel(logging.DEBUG)
